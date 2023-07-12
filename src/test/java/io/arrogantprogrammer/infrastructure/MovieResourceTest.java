@@ -15,10 +15,10 @@ public class MovieResourceTest {
     public void testRootPath() {
 
         given()
-                .when().get("/")
+                .when().get("/movies")
                 .then()
                 .statusCode(200)
-                .body(containsString("Mission:Impossible"));
+                .body(containsString("Mission: Impossible"));
 
     }
 }
