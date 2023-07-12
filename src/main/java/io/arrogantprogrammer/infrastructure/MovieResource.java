@@ -18,10 +18,21 @@ public class MovieResource {
     @Inject
     MovieRepository movieRepository;
 
-    @GET@Transactional
+    @GET
+    @Transactional
     public Response randomMovie() {
 
+        LOGGER.debug("returning random movie");
         Movie movie = movieRepository.randomMovie();
         return Response.ok().entity(movie).build();
+    }
+
+    @GET
+    @Path("/all")
+    @Transactional
+    public Response allMovies() {
+
+        LOGGER.debug("returning all movies");
+        return Response.ok().entity(movieRepository.listAll()).build();
     }
 }
