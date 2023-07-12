@@ -1,7 +1,5 @@
-package io.arrogantprogrammer.infrastructure;
+package io.arrogantprogrammer.domain;
 
-import io.arrogantprogrammer.domain.IMFAgent;
-import io.arrogantprogrammer.domain.Movie;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
