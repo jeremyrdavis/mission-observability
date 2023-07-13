@@ -9,11 +9,16 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 
 @ApplicationScoped
 public class IMFAgentRepository implements PanacheRepository<IMFAgent> {
 
     static final Logger LOGGER = LoggerFactory.getLogger(IMFAgentRepository.class);
+
+    private AtomicLong counter = new AtomicLong(0);
+
     @PostConstruct
     @Transactional
     void init() {
@@ -29,5 +34,18 @@ public class IMFAgentRepository implements PanacheRepository<IMFAgent> {
             imfAgent.persist();
         });
 
+    }
+
+    public IMFAgent randomAgent() {
+        LOGGER.debug("returning a random agent");
+
+        // potential failure
+        final Long invocationNumber = counter.getAndIncrement();
+        if (invocationNumber % 4 > 1) { // alternate 2 successful and 2 failing invocations
+            LOGGER.error("failing with: {}!", invocationNumber);
+            throw new RuntimeException("Service failed.");
+        }
+        List<IMFAgent> imfAgents = IMFAgent.listAll();
+        return imfAgents.get(new Random().nextInt(imfAgents.size()));
     }
 }
