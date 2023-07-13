@@ -31,6 +31,6 @@ scrape_configs:
   # https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scrape_config
   - job_name: 'quarkus'
     scrape_interval: 2s
-    # metrics_path: '/metrics'
+    metrics_path: '/q/metrics/prometheus'
     static_configs:
-      - targets: ['docker.for.mac.localhost:9990']
+      - targets: ['docker.for.mac.localhost:9000']
