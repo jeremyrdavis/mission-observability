@@ -9,6 +9,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.faulttolerance.Retry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,9 +34,11 @@ public class IMFResource {
     @GET
     @Path("/random")
     @Transactional
+    @Retry(retryOn = RuntimeException.class, maxRetries = 3, delay = 150)
     public Response randomAgent() {
 
         LOGGER.debug("returning random agents");
         return Response.ok().entity(imfAgentRepository.randomAgent()).build();
     }
+
 }

@@ -2,6 +2,7 @@ package io.arrogantprogrammer.infrastructure;
 
 import io.arrogantprogrammer.domain.Movie;
 import io.arrogantprogrammer.domain.MovieRepository;
+import io.opentelemetry.instrumentation.annotations.WithSpan;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
@@ -25,6 +26,7 @@ public class MovieResource {
 
     @GET
     @Transactional
+    @WithSpan("randomMovieSpan")
     public Response randomMovie() {
 
         LOGGER.debug("returning random movie");
@@ -35,6 +37,7 @@ public class MovieResource {
     @GET
     @Path("/all")
     @Transactional
+    @WithSpan("allMoviesSpan")
     public Response allMovies() {
 
         LOGGER.debug("returning all movies");

@@ -4,6 +4,8 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +38,7 @@ public class IMFAgentRepository implements PanacheRepository<IMFAgent> {
 
     }
 
+//    @Fallback(fallbackMethod = "defaultIMFAgent")
     public IMFAgent randomAgent() {
         LOGGER.debug("returning a random agent");
 
@@ -47,5 +50,9 @@ public class IMFAgentRepository implements PanacheRepository<IMFAgent> {
         }
         List<IMFAgent> imfAgents = IMFAgent.listAll();
         return imfAgents.get(new Random().nextInt(imfAgents.size()));
+    }
+
+    IMFAgent defaultIMFAgent() {
+        return new IMFAgent("Ethan Hunt");
     }
 }

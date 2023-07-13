@@ -1,6 +1,8 @@
 package io.arrogantprogrammer.infrastructure;
 
 import io.arrogantprogrammer.domain.QuoteRepository;
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
@@ -23,6 +25,8 @@ public class QuotesResource {
 
     @GET
     @Transactional
+    @Timed(value = "QuotesResource.randomQuote")
+    @Counted(value = "time.now")
     public Response randomQuote() {
 
         return Response.ok().entity(quoteRepository.randomQuote()).build();

@@ -42,7 +42,7 @@ public class QuoteRepository implements PanacheRepository<Quote> {
 
     public Quote randomQuote() {
 
-        LOGGER.debug("returning a random movie");
+        LOGGER.debug("returning a random quote");
         List<Quote> quotes = Quote.listAll();
         return quotes.get(new Random().nextInt(quotes.size()));
     }
